@@ -653,8 +653,49 @@ class TLSRawClient:
         finally:
             if self.socket:
                 self.socket.close()
-                
+
+        log_response(results)
+
         return results
+
+
+def log_response(results: Dict[str, Any]):
+    print(f"Conexão TCP: {'✓' if results['connection_success'] else '✗'}")
+    if results.get('connect_time'):
+        print(f"Tempo de conexão: {results['connect_time']:.3f}s")
+        
+    print(f"Client Hello enviado: {'✓' if results['client_hello_sent'] else '✗'}")
+    if results.get('client_hello_size'):
+        print(f"Tamanho Client Hello: {results['client_hello_size']} bytes")
+    
+    if results['server_response']:
+        resp = results['server_response']
+        print(f"Resposta do servidor: {resp['type']}")
+        if 'handshake_type' in resp:
+            print(f"Handshake Type: {resp['handshake_type']}")
+        if 'alert_level' in resp:
+            print(f"Alert: {resp['alert_level']} - {resp['alert_description']}")
+            
+    if results['error']:
+        print(f"Erro: {results['error']}")
+        
+    if results.get('raw_response_bytes'):
+        print("Resposta raw (hex+ascii):")
+        print(hexdump(results['raw_response_bytes'], 32))
+    elif results.get('raw_response'):
+        print(f"Resposta raw (hex): {results['raw_response']}")
+
+def hexdump(data: bytes, width: int = 16) -> str:
+    """
+    Gera um dump hex+ascii similar ao hexdump clássico.
+    """
+    lines = []
+    for i in range(0, len(data), width):
+        chunk = data[i:i+width]
+        hex_bytes = ' '.join(f"{b:02x}" for b in chunk)
+        ascii_bytes = ''.join((chr(b) if 32 <= b < 127 else '.') for b in chunk)
+        lines.append(f"{i:08x}  {hex_bytes:<{width*3}}  {ascii_bytes}")
+    return '\n'.join(lines)
 
 
 def main():
@@ -686,31 +727,7 @@ def main():
         if args.repeat > 1:
             print(f"--- Tentativa {i+1}/{args.repeat} ---")
         
-        results = client.connect_and_test(use_sni=not args.no_sni)
-        
-        print(f"Conexão TCP: {'✓' if results['connection_success'] else '✗'}")
-        if results.get('connect_time'):
-            print(f"Tempo de conexão: {results['connect_time']:.3f}s")
-            
-        print(f"Client Hello enviado: {'✓' if results['client_hello_sent'] else '✗'}")
-        if results.get('client_hello_size'):
-            print(f"Tamanho Client Hello: {results['client_hello_size']} bytes")
-        
-        if results['server_response']:
-            resp = results['server_response']
-            print(f"Resposta do servidor: {resp['type']}")
-            if 'handshake_type' in resp:
-                print(f"Handshake Type: {resp['handshake_type']}")
-            if 'alert_level' in resp:
-                print(f"Alert: {resp['alert_level']} - {resp['alert_description']}")
-                
-        if results['error']:
-            print(f"Erro: {results['error']}")
-            
-        if results.get('raw_response') and args.verbose:
-            print(f"Resposta raw (hex): {results['raw_response']}")
-            
-        print()
+        client.connect_and_test(use_sni=not args.no_sni)
         
         if i < args.repeat - 1:
             time.sleep(1)  # Pausa entre tentativas
