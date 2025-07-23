@@ -1,0 +1,15 @@
+{
+  "target_host": "api.github.com",
+  "target_port": 443,
+  "proxy_host": "secure-proxy.corp.com",
+  "proxy_port": 3128,
+  "proxy_username": "DOMAIN\\usuario",
+  "proxy_password": "senha_aqui",
+  "timeout": 45,
+  "_metadata": {
+    "description": "Configuração para proxy com autenticação Windows",
+    "environment": "corporate",
+    "created_by": "ProxyTLSClient",
+    "notes": "Requer autenticação domain\\user - pode ter SSL inspection ativo"
+  }
+}

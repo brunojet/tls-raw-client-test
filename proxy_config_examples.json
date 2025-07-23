@@ -1,0 +1,140 @@
+{
+  "proxy_configurations": {
+    "default_corporate": {
+      "description": "Configuração padrão para proxy corporativo",
+      "proxy_host": "proxy.empresa.com",
+      "proxy_port": 8080,
+      "proxy_username": null,
+      "proxy_password": null,
+      "timeout": 30
+    },
+    "authenticated_proxy": {
+      "description": "Proxy com autenticação Basic",
+      "proxy_host": "proxy.corp.local",
+      "proxy_port": 3128,
+      "proxy_username": "DOMAIN\\username",
+      "proxy_password": "password_here",
+      "timeout": 45
+    },
+    "secure_proxy": {
+      "description": "Proxy seguro com SSL inspection",
+      "proxy_host": "secure-proxy.company.com",
+      "proxy_port": 8443,
+      "proxy_username": "user@company.com",
+      "proxy_password": "complex_password",
+      "timeout": 60
+    }
+  },
+  "test_targets": {
+    "google": {
+      "host": "www.google.com",
+      "port": 443,
+      "description": "Teste básico de conectividade"
+    },
+    "github": {
+      "host": "api.github.com", 
+      "port": 443,
+      "description": "API pública comum"
+    },
+    "microsoft": {
+      "host": "login.microsoftonline.com",
+      "port": 443,
+      "description": "Serviço Microsoft comum em empresas"
+    },
+    "aws": {
+      "host": "ec2.amazonaws.com",
+      "port": 443,
+      "description": "AWS API endpoint"
+    },
+    "custom": {
+      "host": "seu-servidor.com",
+      "port": 443,
+      "description": "Servidor personalizado para teste"
+    }
+  },
+  "common_corporate_proxies": {
+    "bluecoat": {
+      "description": "Symantec Blue Coat ProxySG",
+      "typical_ports": [8080, 3128, 8081],
+      "supports_auth": true,
+      "ssl_inspection": true
+    },
+    "fortigate": {
+      "description": "Fortinet FortiGate Proxy",
+      "typical_ports": [8080, 3128, 8888],
+      "supports_auth": true,
+      "ssl_inspection": true
+    },
+    "squid": {
+      "description": "Squid Proxy Server",
+      "typical_ports": [3128, 8080, 8888],
+      "supports_auth": true,
+      "ssl_inspection": false
+    },
+    "cisco_wsa": {
+      "description": "Cisco Web Security Appliance",
+      "typical_ports": [8080, 3128, 8081],
+      "supports_auth": true,
+      "ssl_inspection": true
+    }
+  },
+  "troubleshooting": {
+    "connection_refused": {
+      "error": "Connection refused to proxy",
+      "solutions": [
+        "Verificar se proxy_host e proxy_port estão corretos",
+        "Confirmar se proxy está acessível da rede atual",
+        "Testar conectividade: telnet proxy_host proxy_port"
+      ]
+    },
+    "authentication_failed": {
+      "error": "407 Proxy Authentication Required",
+      "solutions": [
+        "Verificar username e password",
+        "Confirmar formato do username (pode precisar de DOMAIN\\user)",
+        "Verificar se conta não está bloqueada",
+        "Testar com browser primeiro"
+      ]
+    },
+    "connect_method_disabled": {
+      "error": "405 Method Not Allowed",
+      "solutions": [
+        "Proxy não suporta método CONNECT",
+        "Verificar configurações de proxy para HTTPS",
+        "Pode precisar de configuração especial no proxy"
+      ]
+    },
+    "ssl_interception": {
+      "error": "Certificate verification failed",
+      "solutions": [
+        "Proxy está fazendo SSL inspection",
+        "Certificado foi substituído pelo do proxy",
+        "Considerar desabilitar certificate pinning para testes"
+      ]
+    },
+    "timeout_issues": {
+      "error": "Timeout during connection",
+      "solutions": [
+        "Aumentar timeout value",
+        "Verificar latência de rede",
+        "Proxy pode estar sobrecarregado",
+        "Firewall pode estar dropando conexões"
+      ]
+    }
+  },
+  "environment_variables": {
+    "HTTP_PROXY": "http://proxy.company.com:8080",
+    "HTTPS_PROXY": "http://proxy.company.com:8080", 
+    "NO_PROXY": "localhost,127.0.0.1,.local",
+    "PROXY_USERNAME": "username",
+    "PROXY_PASSWORD": "password"
+  },
+  "usage_notes": [
+    "Sempre testar conectividade básica antes de TLS",
+    "Verificar logs detalhados para diagnóstico",
+    "Alguns proxies exigem User-Agent específico",
+    "SSL inspection pode quebrar certificate pinning",
+    "Timeouts podem precisar ajuste em redes lentas",
+    "Autenticação pode expirar e precisar renovação"
+  ]
+}

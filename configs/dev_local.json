@@ -1,0 +1,13 @@
+{
+  "target_host": "httpbin.org",
+  "target_port": 443,
+  "proxy_host": "localhost",
+  "proxy_port": 8080,
+  "timeout": 15,
+  "_metadata": {
+    "description": "Configuração para desenvolvimento local",
+    "environment": "development",
+    "created_by": "ProxyTLSClient",
+    "notes": "Use para testes locais com proxy local. Ajuste conforme necessário."
+  }
+}

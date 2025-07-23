@@ -1,0 +1,15 @@
+{
+  "target_host": "api.aws.amazon.com",
+  "target_port": 443,
+  "proxy_host": "lambda-proxy.internal.com",
+  "proxy_port": 8080,
+  "proxy_username": "lambda_service",
+  "proxy_password": "service_password_123",
+  "timeout": 60,
+  "_metadata": {
+    "description": "Configuração específica para AWS Lambda em ambiente corporativo",
+    "environment": "lambda",
+    "created_by": "ProxyTLSClient",
+    "notes": "Configuração otimizada para uso em AWS Lambda com timeout estendido"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "target_host": "www.google.com",
+  "target_port": 443,
+  "proxy_host": "proxy.empresa.com",
+  "proxy_port": 8080,
+  "timeout": 30,
+  "_metadata": {
+    "description": "Configuração básica para proxy corporativo sem autenticação",
+    "environment": "production",
+    "created_by": "ProxyTLSClient",
+    "notes": "Proxy padrão da empresa - sem autenticação necessária"
+  }
+}

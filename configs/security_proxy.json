@@ -1,0 +1,15 @@
+{
+  "target_host": "external-api.vendor.com",
+  "target_port": 443,
+  "proxy_host": "firewall-proxy.security.com",
+  "proxy_port": 8443,
+  "proxy_username": "security_audit",
+  "proxy_password": "audit_pass_2024",
+  "timeout": 30,
+  "_metadata": {
+    "description": "Configuração para testes de segurança através de firewall",
+    "environment": "security_testing",
+    "created_by": "ProxyTLSClient",
+    "notes": "Proxy de segurança com SSL inspection - certificados podem ser alterados"
+  }
+}

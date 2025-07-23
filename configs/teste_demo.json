@@ -1,0 +1,14 @@
+{
+  "target_host": "teste.exemplo.com",
+  "target_port": 443,
+  "proxy_host": "proxy.teste.com",
+  "proxy_port": 8080,
+  "proxy_username": "usuario_teste",
+  "proxy_password": "senha_teste",
+  "timeout": 45,
+  "_metadata": {
+    "created_by": "ProxyTLSClient",
+    "created_at": "2025-07-23 08:15:00",
+    "description": "Configuração para teste.exemplo.com:443 via proxy.teste.com:8080"
+  }
+}

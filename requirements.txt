@@ -1,0 +1,11 @@
+# Não há dependências externas!
+# Este projeto usa apenas bibliotecas padrão do Python
+
+# Para desenvolvimento (opcional):
+# pytest>=6.0.0
+# black>=21.0.0
+
+# Python 3.6+ é necessário para:
+# - Type hints
+# - f-strings
+# - Outras features modernas
