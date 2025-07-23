@@ -4,11 +4,14 @@ Integração AWS Lambda - Exemplo de uso do Proxy TLS Client em ambiente serverl
 Demonstra configuração via arquivos e variáveis de ambiente
 """
 
-import json
+import sys
 import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+import json
 import logging
 from typing import Dict, Any
-from tls_raw_client import TLSRawClient
+from tlsraw.tls_raw_client import TLSRawClient
 
 # Configurar logging para Lambda
 logger = logging.getLogger()

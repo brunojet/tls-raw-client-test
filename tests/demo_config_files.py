@@ -3,10 +3,13 @@
 Demonstração do sistema de configuração por arquivos do Proxy TLS Client
 """
 
+import sys
 import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
 import json
 import logging
-from proxy_tls_client import ProxyTLSClient
+from tlsraw.proxy_tls_client import ProxyTLSClient
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

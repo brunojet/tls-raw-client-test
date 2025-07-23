@@ -4,7 +4,7 @@ Diagnóstico específico para problemas de Firewall Corporativo
 Testa diferentes variações de Client Hello para identificar bloqueios
 """
 
-from tls_raw_client import TLSRawClient, logger
+from .tls_raw_client import TLSRawClient, logger
 import struct
 import time
 import json

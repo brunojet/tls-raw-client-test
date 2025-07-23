@@ -24,10 +24,14 @@ def check_directory_structure():
     print("📁 Verificando estrutura de diretórios...")
     
     directories = [
+        ("src", "Código fonte principal"),
+        ("src/tlsraw", "Módulo tlsraw"),
         ("configs", "Arquivos de configuração"),
         ("tests", "Scripts de teste"),
         ("examples", "Exemplos de uso"),
-        ("docs", "Documentação")
+        ("docs", "Documentação"),
+        ("scripts", "Scripts utilitários"),
+        ("aws", "Integração AWS")
     ]
     
     all_good = True
@@ -45,12 +49,14 @@ def check_core_files():
     print("\n📄 Verificando arquivos principais...")
     
     core_files = [
-        ("tls_raw_client.py", "Cliente TLS base"),
-        ("proxy_tls_client.py", "Cliente com suporte a proxy"),
-        ("firewall_diagnostic.py", "Diagnósticos de firewall"),
-        ("compare_openssl.py", "Comparação com OpenSSL"),
-        ("lambda_integration.py", "Integração AWS Lambda"),
-        ("proxy_setup_utility.py", "Utilitário de configuração"),
+        ("src/tlsraw/tls_raw_client.py", "Cliente TLS base"),
+        ("src/tlsraw/proxy_tls_client.py", "Cliente com suporte a proxy"),
+        ("src/tlsraw/firewall_diagnostic.py", "Diagnósticos de firewall"),
+        ("src/tlsraw/__init__.py", "Módulo principal"),
+        ("scripts/compare_openssl.py", "Comparação com OpenSSL"),
+        ("aws/lambda_integration.py", "Integração AWS Lambda"),
+        ("scripts/proxy_setup_utility.py", "Utilitário de configuração"),
+        ("setup.py", "Script de instalação"),
         ("README.md", "Documentação principal"),
         ("LICENSE", "Licença MIT"),
         ("CHANGELOG.md", "Histórico de mudanças"),
@@ -152,18 +158,21 @@ def check_imports():
     """Verifica se módulos podem ser importados"""
     print("\n🐍 Verificando imports...")
     
+    # Adicionar src ao path
+    import sys
+    import os
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+    
     modules = [
-        ("tls_raw_client", "TLSRawClient"),
-        ("proxy_tls_client", "ProxyTLSClient"),
-        ("firewall_diagnostic", "FirewallDiagnosticClient")
+        ("tlsraw.tls_raw_client", "TLSRawClient"),
+        ("tlsraw.proxy_tls_client", "ProxyTLSClient"),
+        ("tlsraw.firewall_diagnostic", "FirewallDiagnosticClient")
     ]
     
     all_good = True
     for module_name, class_name in modules:
         try:
-            spec = importlib.util.spec_from_file_location(module_name, f"{module_name}.py")
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
+            module = __import__(module_name, fromlist=[class_name])
             
             if hasattr(module, class_name):
                 print(f"✅ {module_name}.{class_name} - Importa corretamente")
@@ -219,11 +228,13 @@ def generate_project_summary():
     
     # Contar arquivos
     file_counts = {
-        "Arquivos Python": len([f for f in os.listdir('.') if f.endswith('.py')]),
+        "Arquivos Python (src)": len([f for f in os.listdir('src/tlsraw') if f.endswith('.py')]) if os.path.exists('src/tlsraw') else 0,
+        "Scripts": len([f for f in os.listdir('scripts') if f.endswith('.py')]) if os.path.exists('scripts') else 0,
         "Configurações": len([f for f in os.listdir('configs') if f.endswith('.json')]) if os.path.exists('configs') else 0,
         "Testes": len([f for f in os.listdir('tests') if f.endswith('.py')]) if os.path.exists('tests') else 0,
         "Exemplos": len([f for f in os.listdir('examples') if f.endswith('.py')]) if os.path.exists('examples') else 0,
-        "Documentação": len([f for f in os.listdir('docs') if f.endswith('.md')]) if os.path.exists('docs') else 0
+        "Documentação": len([f for f in os.listdir('docs') if f.endswith('.md')]) if os.path.exists('docs') else 0,
+        "AWS": len([f for f in os.listdir('aws') if f.endswith('.py')]) if os.path.exists('aws') else 0
     }
     
     for category, count in file_counts.items():

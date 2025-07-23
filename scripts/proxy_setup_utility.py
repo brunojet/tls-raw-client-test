@@ -4,11 +4,15 @@ Utilitário de configuração e teste para Proxy TLS Client
 Facilita setup e diagnóstico em ambientes corporativos
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
 import json
 import argparse
 import getpass
 from typing import Dict, Any
-from proxy_tls_client import create_proxy_client_from_config
+from tlsraw.proxy_tls_client import create_proxy_client_from_config
 
 def load_config_file(config_path: str = "proxy_config_examples.json") -> Dict[str, Any]:
     """Carrega arquivo de configuração"""

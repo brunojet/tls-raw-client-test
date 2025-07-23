@@ -3,9 +3,13 @@
 Teste do Proxy TLS Client - Demonstra uso em ambiente corporativo
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
 import json
 import logging
-from proxy_tls_client import create_proxy_client_from_config
+from tlsraw.proxy_tls_client import create_proxy_client_from_config
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

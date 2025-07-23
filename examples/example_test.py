@@ -3,9 +3,12 @@
 Script de exemplo simples para teste rápido de TLS
 """
 
-from tls_raw_client import TLSRawClient
-import json
 import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from tlsraw.tls_raw_client import TLSRawClient
+import json
 
 def test_server(host, port=443):
     """Testa um servidor TLS e imprime resultados detalhados"""

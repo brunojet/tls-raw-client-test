@@ -3,7 +3,11 @@
 Script para testar e comparar o Client Hello gerado com o dump do OpenSSL
 """
 
-from tls_raw_client import TLSRawClient
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from tlsraw.tls_raw_client import TLSRawClient
 import binascii
 
 def parse_openssl_dump():

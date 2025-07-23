@@ -12,7 +12,7 @@ import logging
 import json
 import os
 from typing import Dict, Any, Optional
-from tls_raw_client import TLSRawClient
+from .tls_raw_client import TLSRawClient
 
 logger = logging.getLogger(__name__)
 

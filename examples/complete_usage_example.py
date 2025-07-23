@@ -4,11 +4,15 @@ Exemplo completo de uso do TLS Raw Client
 Demonstra diferentes cenários de uso e configurações
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
 import json
 import logging
-from tls_raw_client import TLSRawClient
-from proxy_tls_client import ProxyTLSClient
-from firewall_diagnostic import FirewallDiagnosticClient
+from tlsraw.tls_raw_client import TLSRawClient
+from tlsraw.proxy_tls_client import ProxyTLSClient
+from tlsraw.firewall_diagnostic import FirewallDiagnosticClient
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

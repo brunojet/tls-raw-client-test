@@ -20,13 +20,19 @@ Sistema modular e extensível para diagnóstico de conectividade TLS em ambiente
 ## 📁 Estrutura do Projeto
 
 ```
-tls-raw-client/
-├── tls_raw_client.py           # ⭐ Cliente TLS base
-├── proxy_tls_client.py         # 🔗 Extensão com suporte a proxy
-├── firewall_diagnostic.py      # 🛡️ Diagnósticos específicos de firewall
-├── compare_openssl.py          # 🔍 Comparação com OpenSSL
-├── lambda_integration.py       # ☁️ Integração AWS Lambda
-├── proxy_setup_utility.py      # ⚙️ Utilitário de configuração
+tls-raw-client-test/
+├── src/tlsraw/                 # 📦 Código fonte principal
+│   ├── __init__.py             # 🔧 Módulo principal
+│   ├── tls_raw_client.py       # ⭐ Cliente TLS base
+│   ├── proxy_tls_client.py     # 🔗 Extensão com suporte a proxy
+│   └── firewall_diagnostic.py  # 🛡️ Diagnósticos específicos de firewall
+├── scripts/                    # 🔧 Scripts utilitários
+│   ├── compare_openssl.py      # 🔍 Comparação com OpenSSL
+│   ├── proxy_setup_utility.py  # ⚙️ Utilitário de configuração
+│   ├── validate_project.py     # ✅ Validação do projeto
+│   └── upload_to_github.py     # 📤 Upload para GitHub
+├── aws/                        # ☁️ Integração AWS
+│   └── lambda_integration.py   # Lambda handler
 ├── configs/                    # 📁 Configurações de exemplo
 │   ├── proxy_basic.json
 │   ├── proxy_auth.json
@@ -36,17 +42,30 @@ tls-raw-client/
 │   ├── test_response_analysis.py
 │   ├── test_proxy_client.py
 │   └── demo_config_files.py
+├── examples/                   # 💡 Exemplos de uso
+│   ├── example_test.py
+│   └── complete_usage_example.py
 ├── docs/                       # 📚 Documentação
 │   └── PROXY_README.md
-└── examples/                   # 💡 Exemplos de uso
-    └── example_test.py
+├── setup.py                    # � Script de instalação
+└── requirements.txt            # 📋 Dependências
 ```
 
 ## 🚀 Início Rápido
 
+### Instalação
+
+```bash
+# Instalar via pip (desenvolvimento)
+pip install -e .
+
+# Ou adicionar diretório src ao PYTHONPATH
+export PYTHONPATH=$PYTHONPATH:./src
+```
+
 ### 1. Cliente TLS Básico
 ```python
-from tls_raw_client import TLSRawClient
+from tlsraw import TLSRawClient
 
 # Teste básico
 client = TLSRawClient("www.google.com", 443)
@@ -56,7 +75,7 @@ print(f"Sucesso: {result['connection_success']}")
 
 ### 2. Cliente com Proxy Corporativo
 ```python
-from proxy_tls_client import ProxyTLSClient
+from tlsraw import ProxyTLSClient
 
 # Proxy com autenticação
 client = ProxyTLSClient(
@@ -73,7 +92,7 @@ result = client.connect_and_test()
 
 ### 3. Carregamento via Arquivo de Configuração
 ```python
-from proxy_tls_client import ProxyTLSClient
+from tlsraw import ProxyTLSClient
 
 # Carregar configuração de arquivo
 client = ProxyTLSClient.from_config_file("configs/proxy_auth.json")
